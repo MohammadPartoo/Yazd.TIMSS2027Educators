@@ -237,11 +237,8 @@
   /* ---------- Mobile optimizations ---------- */
   @media(max-width:560px){
     section{padding:46px 16px;}
-    .nav{padding:10px 12px;justify-content:center;text-align:center;}
-    .brand{width:100%;justify-content:center;}
+    .nav{padding:10px 12px;}
     .brand b{font-size:16px;}
-    nav.menu{width:100%;justify-content:center;gap:2px;}
-    nav.menu a{font-size:13px;padding:5px 10px;}
     .hero{min-height:72vh;}
     .hero-inner{padding:44px 16px;}
     .badge{font-size:12px;padding:5px 14px;line-height:1.8;}
@@ -670,6 +667,7 @@
     background:var(--gold);color:var(--navy-dark);font-weight:700;
   }
   @media(max-width:900px){
+    header{backdrop-filter:none;-webkit-backdrop-filter:none;z-index:85;}
     .menu-toggle{display:flex;}
     .nav{justify-content:space-between;flex-wrap:nowrap;}
     .brand{width:auto;justify-content:flex-start;}
@@ -677,7 +675,7 @@
       position:fixed;top:0;right:0;bottom:0;width:min(78vw,300px);
       background:linear-gradient(180deg,var(--navy-dark),var(--navy));
       flex-direction:column;justify-content:flex-start;gap:4px;
-      padding:80px 22px 30px;z-index:90;
+      padding:80px 22px 30px;z-index:400;
       transform:translateX(100%);transition:transform .35s cubic-bezier(.22,1,.36,1);
       box-shadow:-12px 0 40px rgba(0,0,0,.35);
       border-right:2px solid var(--gold);
@@ -690,7 +688,7 @@
     }
     .menu-backdrop{
       position:fixed;inset:0;background:rgba(8,18,38,.55);backdrop-filter:blur(3px);
-      z-index:80;opacity:0;pointer-events:none;transition:opacity .3s;
+      z-index:390;opacity:0;pointer-events:none;transition:opacity .3s;
     }
     .menu-backdrop.show{opacity:1;pointer-events:auto;}
     .menu-close{
@@ -1866,5 +1864,6 @@
 })();
 </script>
 
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a1517f96af4d9694',t:'MTc4MzAzNTY1Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
