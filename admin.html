@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>پنل مدیریت محتوای دوره</title>
+<style>
+  :root{--navy:#122a52;--navy-dark:#0c1e3d;--gold:#c9a24b;--gold-light:#e8cf94;--cream:#faf6ee;}
+  *{margin:0;padding:0;box-sizing:border-box;font-family:Vazirmatn,Tahoma,"Segoe UI",sans-serif;}
+  body{background:var(--cream);color:#2a2f3a;line-height:1.9;padding-bottom:60px;}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy-dark));color:#fff;padding:18px 20px;text-align:center;border-bottom:3px solid var(--gold);}
+  header h1{font-size:20px;color:var(--gold-light);}
+  header p{font-size:12.5px;color:#c9d4ea;}
+  .wrap{max-width:760px;margin:0 auto;padding:20px 16px;}
+  .card{background:#fff;border:1px solid #eadfc7;border-radius:16px;padding:22px 20px;margin-bottom:20px;box-shadow:0 8px 20px rgba(18,42,82,.07);}
+  .card h2{font-size:16.5px;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  label{display:block;font-size:13.5px;font-weight:700;color:var(--navy);margin:12px 0 4px;}
+  input[type=text],input[type=password],select,textarea{
+    width:100%;padding:10px 14px;border:1.5px solid #d8cdb4;border-radius:10px;
+    font-size:14px;background:#fffdf8;transition:.2s;font-family:inherit;
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(201,162,75,.15);}
+  .hint{font-size:11.5px;color:#9aa0ad;margin-top:3px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;border:none;cursor:pointer;
+    background:linear-gradient(135deg,var(--navy),#1d3f77);color:#fff;
+    font-size:14.5px;font-weight:700;padding:11px 26px;border-radius:24px;
+    transition:.25s;font-family:inherit;margin-top:16px;
+  }
+  .btn:hover{background:linear-gradient(135deg,var(--gold),#b8903a);color:var(--navy-dark);}
+  .btn:disabled{opacity:.5;cursor:wait;}
+  .btn.sm{padding:6px 14px;font-size:12.5px;margin:0;}
+  .btn.danger{background:linear-gradient(135deg,#a33,#7a1f1f);}
+  .btn.gold{background:linear-gradient(135deg,var(--gold),#b8903a);color:var(--navy-dark);}
+  .msg{border-radius:12px;padding:12px 16px;font-size:13.5px;margin-top:14px;display:none;}
+  .msg.ok{display:block;background:#e8f5e9;border:1px solid #66bb6a;color:#1b5e20;}
+  .msg.err{display:block;background:#fdecea;border:1px solid #ef9a9a;color:#b71c1c;}
+  .msg.info{display:block;background:#e3f2fd;border:1px solid #90caf9;color:#0d47a1;}
+  .item{
+    display:flex;align-items:center;gap:12px;background:var(--cream);
+    border:1px solid #eadfc7;border-radius:12px;padding:12px 14px;margin-bottom:10px;
+  }
+  .item .tic{font-size:22px;flex:0 0 auto;}
+  .item .tinfo{flex:1;min-width:0;}
+  .item .tinfo b{font-size:13.5px;color:var(--navy);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .item .tinfo small{font-size:11px;color:#9aa0ad;}
+  .row{display:flex;gap:12px;}
+  .row > div{flex:1;}
+  details{margin-top:10px;}
+  summary{cursor:pointer;font-size:13px;color:var(--navy);font-weight:700;}
+  .filebox{
+    border:2px dashed var(--gold);border-radius:12px;padding:18px;text-align:center;
+    background:#fffdf8;cursor:pointer;transition:.2s;margin-top:6px;font-size:13.5px;color:#6a7284;
+  }
+  .filebox:hover{background:#fbf4e3;}
+  .filebox input{display:none;}
+  #loginCard ol{padding-right:20px;font-size:13px;color:#4a5164;}
+  #loginCard ol li{margin-bottom:4px;}
+  code{background:#f0e9da;border-radius:6px;padding:1px 8px;font-size:12px;direction:ltr;display:inline-block;}
+  @media(max-width:560px){.row{flex-direction:column;gap:0;}}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🛠 پنل مدیریت «محتوای دوره آنلاین»</h1>
+  <p>دوره کشوری تربیت مدرس علوم تجربی — تیمز ۲۰۲۷ — یزد</p>
+</header>
+
+<div class="wrap">
+
+  <!-- ورود -->
+  <div class="card" id="loginCard">
+    <h2>🔑 ورود مدیر</h2>
+    <p style="font-size:13px;color:#4a5164;">برای مدیریت محتوا به «توکن دسترسی گیت‌هاب» نیاز دارید. این توکن مثل کلید خانه است — فقط یک‌بار می‌سازید و همین‌جا وارد می‌کنید (در مرورگر خودتان ذخیره می‌شود و برای هیچ‌کس ارسال نمی‌شود).</p>
+    <details>
+      <summary>📖 چطور توکن بسازم؟ (یک‌بار برای همیشه)</summary>
+      <ol>
+        <li>وارد این آدرس شوید: <code>github.com/settings/personal-access-tokens/new</code></li>
+        <li>در Token name بنویسید: <code>yazd-site</code></li>
+        <li>در Expiration مدت دلخواه (مثلاً 90 روز) را انتخاب کنید</li>
+        <li>در Repository access گزینه <b>Only select repositories</b> و مخزن <code>Yazd.TIMSS2027Educators</code> را انتخاب کنید</li>
+        <li>در Permissions روی <b>Contents</b> کلیک و <b>Read and write</b> را انتخاب کنید</li>
+        <li>دکمه سبز <b>Generate token</b> را بزنید و متن توکن (با ghp_ یا github_pat_ شروع می‌شود) را کپی کنید</li>
+      </ol>
+    </details>
+    <label>توکن گیت‌هاب:</label>
+    <input type="password" id="token" placeholder="github_pat_... یا ghp_...">
+    <button class="btn" id="loginBtn">ورود و بارگذاری محتوا</button>
+    <div class="msg" id="loginMsg"></div>
+  </div>
+
+  <!-- افزودن -->
+  <div class="card" id="addCard" style="display:none;">
+    <h2>➕ افزودن محتوای جدید</h2>
+    <label>نوع محتوا:</label>
+    <select id="fType">
+      <option value="pdf">📄 فایل PDF</option>
+      <option value="video">🎬 ویدیو (لینک آپارات/شاد/یوتیوب)</option>
+      <option value="link">🔗 پیوند (سایت یا فرم)</option>
+    </select>
+    <label>عنوان:</label>
+    <input type="text" id="fTitle" placeholder="مثلاً: جزوه جلسه اول — چارچوب سنجش تیمز">
+    <label>توضیح کوتاه (اختیاری):</label>
+    <input type="text" id="fDesc" placeholder="مثلاً: ارائه‌شده در نشست علمی روز اول">
+    <label>تاریخ (اختیاری):</label>
+    <input type="text" id="fDate" placeholder="مثلاً: ۲۱ تیر ۱۴۰۵">
+
+    <div id="pdfZone">
+      <label>فایل PDF:</label>
+      <label class="filebox" id="fileboxLabel">
+        📎 برای انتخاب فایل PDF کلیک کنید (حداکثر ۲۵ مگابایت)
+        <input type="file" id="fFile" accept=".pdf">
+      </label>
+      <div class="hint">فایل خودکار در پوشه files مخزن آپلود می‌شود — نیازی به تغییر نام نیست.</div>
+    </div>
+
+    <div id="urlZone" style="display:none;">
+      <label>لینک:</label>
+      <input type="text" id="fUrl" placeholder="https://www.aparat.com/v/....." dir="ltr" style="text-align:left;">
+    </div>
+
+    <button class="btn gold" id="addBtn">✅ ثبت و انتشار در سایت</button>
+    <div class="msg" id="addMsg"></div>
+  </div>
+
+  <!-- فهرست -->
+  <div class="card" id="listCard" style="display:none;">
+    <h2>📚 محتوای فعلی سایت</h2>
+    <div id="itemsList"></div>
+    <div class="msg" id="listMsg"></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var OWNER = 'MohammadPartoo';
+  var REPO  = 'Yazd.TIMSS2027Educators';
+  var API   = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/';
+
+  var token = localStorage.getItem('gh_token') || '';
+  var items = [];
+  var contentSha = null;
+
+  var $ = function(id){ return document.getElementById(id); };
+  var ICONS = {pdf:'📄', video:'🎬', link:'🔗'};
+
+  function show(id, cls, text){
+    var el = $(id);
+    el.className = 'msg ' + cls;
+    el.textContent = text;
+  }
+  function hide(id){ $(id).className = 'msg'; }
+
+  function b64EncodeUnicode(str){
+    return btoa(unescape(encodeURIComponent(str)));
+  }
+  function b64DecodeUnicode(str){
+    return decodeURIComponent(escape(atob(str.replace(/\n/g,''))));
+  }
+
+  function gh(path, opts){
+    opts = opts || {};
+    opts.headers = {
+      'Authorization': 'Bearer ' + token,
+      'Accept': 'application/vnd.github+json'
+    };
+    return fetch(API + path, opts);
+  }
+
+  /* ---------- load ---------- */
+  function loadContent(){
+    show('loginMsg','info','در حال اتصال به گیت‌هاب…');
+    gh('content.json?ref=main').then(function(r){
+      if(r.status === 401) throw new Error('توکن نامعتبر است. دوباره بسازید.');
+      if(r.status === 404) return null; /* file not there yet */
+      if(!r.ok) throw new Error('خطای اتصال (' + r.status + ')');
+      return r.json();
+    }).then(function(data){
+      if(data){
+        contentSha = data.sha;
+        try{
+          var parsed = JSON.parse(b64DecodeUnicode(data.content));
+          items = parsed.items || [];
+        }catch(e){ items = []; }
+      } else { contentSha = null; items = []; }
+      localStorage.setItem('gh_token', token);
+      $('loginCard').style.display = 'none';
+      $('addCard').style.display = '';
+      $('listCard').style.display = '';
+      renderList();
+    }).catch(function(e){
+      show('loginMsg','err','⚠️ ' + e.message);
+    });
+  }
+
+  /* ---------- save content.json ---------- */
+  function saveContent(message){
+    var body = {
+      message: message,
+      content: b64EncodeUnicode(JSON.stringify({items: items}, null, 2)),
+      branch: 'main'
+    };
+    if(contentSha) body.sha = contentSha;
+    return gh('content.json', {method:'PUT', body: JSON.stringify(body)})
+      .then(function(r){
+        if(!r.ok) return r.json().then(function(j){ throw new Error(j.message || r.status); });
+        return r.json();
+      }).then(function(j){
+        contentSha = j.content.sha;
+      });
+  }
+
+  /* ---------- upload pdf ---------- */
+  function uploadFile(file){
+    return new Promise(function(resolve, reject){
+      if(file.size > 25 * 1024 * 1024) return reject(new Error('حجم فایل بیش از ۲۵ مگابایت است.'));
+      var reader = new FileReader();
+      reader.onload = function(){
+        var b64 = reader.result.split(',')[1];
+        var safeName = file.name
+          .replace(/\s+/g,'-')
+          .replace(/[^\w.\-\u0600-\u06FF]/g,'')
+          .replace(/[\u0600-\u06FF]+/g, function(){ return 'f'; });
+        var path = 'files/' + Date.now() + '-' + safeName;
+        /* check-free create (unique name thanks to timestamp) */
+        gh(path, {method:'PUT', body: JSON.stringify({
+          message: 'آپلود فایل: ' + file.name,
+          content: b64,
+          branch: 'main'
+        })}).then(function(r){
+          if(!r.ok) return r.json().then(function(j){ throw new Error(j.message || r.status); });
+          resolve(path);
+        }).catch(reject);
+      };
+      reader.onerror = function(){ reject(new Error('خطا در خواندن فایل')); };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  /* ---------- render list ---------- */
+  function renderList(){
+    var box = $('itemsList');
+    if(!items.length){
+      box.innerHTML = '<p style="font-size:13.5px;color:#9aa0ad;text-align:center;padding:10px;">هنوز محتوایی ثبت نشده است.</p>';
+      return;
+    }
+    box.innerHTML = '';
+    items.forEach(function(it, i){
+      var div = document.createElement('div');
+      div.className = 'item';
+      div.innerHTML =
+        '<span class="tic">' + (ICONS[it.type] || '🔗') + '</span>' +
+        '<div class="tinfo"><b></b><small>' + (it.date || '') + '</small></div>' +
+        '<button class="btn sm danger" data-i="' + i + '">حذف</button>';
+      div.querySelector('b').textContent = it.title;
+      box.appendChild(div);
+    });
+    box.querySelectorAll('button[data-i]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var i = parseInt(btn.getAttribute('data-i'), 10);
+        if(!confirm('«' + items[i].title + '» از سایت حذف شود؟')) return;
+        var removed = items.splice(i, 1);
+        btn.disabled = true;
+        saveContent('حذف: ' + removed[0].title).then(function(){
+          show('listMsg','ok','✅ حذف شد. سایت تا ۱-۲ دقیقه دیگر به‌روز می‌شود.');
+          renderList();
+        }).catch(function(e){
+          items.splice(i, 0, removed[0]);
+          show('listMsg','err','⚠️ ' + e.message);
+          renderList();
+        });
+      });
+    });
+  }
+
+  /* ---------- form behavior ---------- */
+  $('fType').addEventListener('change', function(){
+    var isPdf = this.value === 'pdf';
+    $('pdfZone').style.display = isPdf ? '' : 'none';
+    $('urlZone').style.display = isPdf ? 'none' : '';
+  });
+  $('fFile').addEventListener('change', function(){
+    if(this.files[0]) $('fileboxLabel').childNodes[0].textContent = '📎 ' + this.files[0].name + ' ';
+  });
+
+  $('addBtn').addEventListener('click', function(){
+    hide('addMsg');
+    var type = $('fType').value;
+    var title = $('fTitle').value.trim();
+    if(!title) return show('addMsg','err','⚠️ عنوان را وارد کنید.');
+    var btn = this; btn.disabled = true;
+    show('addMsg','info','در حال انتشار…');
+
+    var getUrl;
+    if(type === 'pdf'){
+      var f = $('fFile').files[0];
+      if(!f){ btn.disabled = false; return show('addMsg','err','⚠️ فایل PDF را انتخاب کنید.'); }
+      show('addMsg','info','در حال آپلود فایل… (بسته به حجم ممکن است کمی طول بکشد)');
+      getUrl = uploadFile(f);
+    } else {
+      var u = $('fUrl').value.trim();
+      if(!/^https?:\/\//.test(u)){ btn.disabled = false; return show('addMsg','err','⚠️ لینک باید با https شروع شود.'); }
+      getUrl = Promise.resolve(u);
+    }
+
+    getUrl.then(function(url){
+      var item = {type: type, title: title, url: url};
+      var d = $('fDesc').value.trim(); if(d) item.desc = d;
+      var dt = $('fDate').value.trim(); if(dt) item.date = dt;
+      items.unshift(item); /* newest first */
+      return saveContent('افزودن: ' + title);
+    }).then(function(){
+      show('addMsg','ok','✅ منتشر شد! سایت تا ۱-۲ دقیقه دیگر به‌روز می‌شود.');
+      $('fTitle').value = ''; $('fDesc').value = ''; $('fDate').value = '';
+      $('fUrl').value = ''; $('fFile').value = '';
+      $('fileboxLabel').childNodes[0].textContent = '📎 برای انتخاب فایل PDF کلیک کنید (حداکثر ۲۵ مگابایت) ';
+      renderList();
+      btn.disabled = false;
+    }).catch(function(e){
+      show('addMsg','err','⚠️ ' + e.message);
+      btn.disabled = false;
+    });
+  });
+
+  /* ---------- login ---------- */
+  $('loginBtn').addEventListener('click', function(){
+    token = $('token').value.trim();
+    if(!token) return show('loginMsg','err','⚠️ توکن را وارد کنید.');
+    loadContent();
+  });
+  if(token){
+    $('token').value = token;
+    loadContent();
+  }
+})();
+</script>
+</body>
+</html>
