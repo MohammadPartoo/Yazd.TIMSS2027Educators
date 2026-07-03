@@ -206,6 +206,15 @@
   }
   function hide(id){ $(id).className = 'msg'; }
 
+  function cleanUrl(u){
+    /* حذف فاصله‌ها و نویسه‌های نامرئی راست‌به‌چپ که موقع کپی از تلگرام/شاد می‌چسبند */
+    u = (u || '').replace(/[\u200e\u200f\u202a-\u202e\u2066-\u2069\s]/g, '');
+    /* اگر با www یا دامنه شروع شد، https اضافه کن */
+    if(u && !/^https?:\/\//i.test(u)){
+      if(/^(www\.|aparat\.com|youtu|shad\.ir|t\.me|docs\.google)/i.test(u)) u = 'https://' + u;
+    }
+    return u;
+  }
   function b64EncodeUnicode(str){ return btoa(unescape(encodeURIComponent(str))); }
   function b64DecodeUnicode(str){ return decodeURIComponent(escape(atob(str.replace(/\n/g,'')))); }
 
@@ -245,7 +254,16 @@
   }
 
   /* ---------- save content.json ---------- */
-  function saveContent(message){
+  function refreshSha(){
+    return gh('content.json?ref=main').then(function(r){
+      if(r.status === 404){ contentSha = null; return; }
+      if(!r.ok) throw new Error('خطای اتصال (' + r.status + ')');
+      return r.json();
+    }).then(function(data){
+      if(data) contentSha = data.sha;
+    });
+  }
+  function saveContent(message, isRetry){
     var body = {
       message: message,
       content: b64EncodeUnicode(JSON.stringify({items: items}, null, 2)),
@@ -254,10 +272,19 @@
     if(contentSha) body.sha = contentSha;
     return gh('content.json', {method:'PUT', body: JSON.stringify(body)})
       .then(function(r){
-        if(!r.ok) return r.json().then(function(j){ throw new Error(j.message || r.status); });
+        if(r.status === 409 || r.status === 422){
+          /* نسخه فایل تغییر کرده (مثلاً پنل در دو تب باز بوده) — یک‌بار خودکار به‌روزرسانی و تلاش مجدد */
+          if(!isRetry){
+            return refreshSha().then(function(){ return saveContent(message, true); });
+          }
+          throw new Error('فایل محتوا هم‌زمان تغییر کرده است. صفحه پنل را رفرش کنید و دوباره تلاش کنید.');
+        }
+        if(r.status === 401) throw new Error('توکن منقضی یا نامعتبر است. توکن جدید بسازید.');
+        if(r.status === 403) throw new Error('توکن اجازه نوشتن ندارد. در تنظیمات توکن، دسترسی Contents را روی Read and write بگذارید.');
+        if(!r.ok) return r.json().then(function(j){ throw new Error(j.message || ('خطای ' + r.status)); });
         return r.json();
       }).then(function(j){
-        contentSha = j.content.sha;
+        if(j && j.content) contentSha = j.content.sha;
       });
   }
 
@@ -451,13 +478,13 @@
           return show('addMsg','err','⚠️ فایل ویدیو را انتخاب کنید یا حالت «لینک» را بزنید.');
         }
       } else {
-        var vu = $('fVUrl').value.trim();
-        if(!/^https?:\/\//.test(vu)){ btn.disabled = false; return show('addMsg','err','⚠️ لینک ویدیو باید با https شروع شود.'); }
+        var vu = cleanUrl($('fVUrl').value);
+        if(!/^https?:\/\//.test(vu)){ btn.disabled = false; return show('addMsg','err','⚠️ لینک ویدیو معتبر نیست. لینک را کامل کپی کنید (مثال: https://www.aparat.com/v/xxxxx).'); }
         getUrl = Promise.resolve(vu);
       }
     } else {
-      var u = $('fUrl').value.trim();
-      if(!/^https?:\/\//.test(u)){ btn.disabled = false; return show('addMsg','err','⚠️ لینک باید با https شروع شود.'); }
+      var u = cleanUrl($('fUrl').value);
+      if(!/^https?:\/\//.test(u)){ btn.disabled = false; return show('addMsg','err','⚠️ لینک معتبر نیست. لینک را کامل کپی کنید (باید با https شروع شود).'); }
       getUrl = Promise.resolve(u);
     }
 
