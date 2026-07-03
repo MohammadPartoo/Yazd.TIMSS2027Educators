@@ -89,6 +89,14 @@
 
 <div class="wrap">
 
+  <!-- تب انتخاب بخش -->
+  <div class="card" id="sectionTabs" style="display:none;padding:14px 20px;">
+    <div class="subtabs">
+      <button type="button" class="subtab active" id="tabContent">📚 محتوای دوره</button>
+      <button type="button" class="subtab" id="tabActs">🗂 فعالیت‌ها</button>
+    </div>
+  </div>
+
   <!-- ورود -->
   <div class="card" id="loginCard">
     <h2>🔑 ورود مدیر</h2>
@@ -118,11 +126,7 @@
       <button class="btn sm gray" id="cancelEdit">انصراف از ویرایش</button>
     </div>
     <label>نوع محتوا:</label>
-    <select id="fType">
-      <option value="pdf">📄 فایل PDF</option>
-      <option value="video">🎬 ویدیو</option>
-      <option value="link">🔗 پیوند (سایت یا فرم)</option>
-    </select>
+    <select id="fType"></select>
     <label>عنوان:</label>
     <input type="text" id="fTitle" placeholder="مثلاً: جزوه جلسه اول — چارچوب سنجش تیمز">
     <label>توضیح کوتاه (اختیاری):</label>
@@ -175,7 +179,7 @@
 
   <!-- فهرست -->
   <div class="card" id="listCard" style="display:none;">
-    <h2>📚 محتوای فعلی سایت</h2>
+    <h2>📚 موارد ثبت‌شده در این بخش</h2>
     <div id="itemsList"></div>
     <div class="msg" id="listMsg"></div>
   </div>
@@ -189,6 +193,29 @@
   var API   = 'https://api.github.com/repos/' + OWNER + '/' + REPO + '/contents/';
   var MAX_MB = 25;
 
+  /* دو بخش: content (محتوای دوره) و acts (فعالیت‌ها) */
+  var SECTIONS = {
+    content: {
+      file: 'content.json',
+      label: 'محتوای دوره',
+      types: [
+        {v:'pdf',   t:'📄 فایل PDF'},
+        {v:'video', t:'🎬 ویدیو'},
+        {v:'link',  t:'🔗 پیوند (سایت یا فرم)'}
+      ]
+    },
+    acts: {
+      file: 'activities.json',
+      label: 'فعالیت‌ها',
+      types: [
+        {v:'image', t:'🖼 عکس'},
+        {v:'pdf',   t:'📄 فایل PDF'},
+        {v:'word',  t:'📝 فایل Word'}
+      ]
+    }
+  };
+  var section = 'content';
+
   var token = localStorage.getItem('gh_token') || '';
   var items = [];
   var contentSha = null;
@@ -196,8 +223,8 @@
   var videoMode = 'link';  /* link | file */
 
   var $ = function(id){ return document.getElementById(id); };
-  var ICONS = {pdf:'📄', video:'🎬', link:'🔗'};
-  var TYPE_FA = {pdf:'فایل PDF', video:'ویدیو', link:'پیوند'};
+  var ICONS = {pdf:'📄', video:'🎬', link:'🔗', image:'🖼', word:'📝'};
+  var TYPE_FA = {pdf:'فایل PDF', video:'ویدیو', link:'پیوند', image:'عکس', word:'فایل Word'};
 
   function show(id, cls, text){
     var el = $(id);
@@ -230,7 +257,7 @@
   /* ---------- load ---------- */
   function loadContent(){
     show('loginMsg','info','در حال اتصال به گیت‌هاب…');
-    gh('content.json?ref=main').then(function(r){
+    gh(SECTIONS[section].file + '?ref=main').then(function(r){
       if(r.status === 401) throw new Error('توکن نامعتبر است. دوباره بسازید.');
       if(r.status === 404) return null;
       if(!r.ok) throw new Error('خطای اتصال (' + r.status + ')');
@@ -245,8 +272,10 @@
       } else { contentSha = null; items = []; }
       localStorage.setItem('gh_token', token);
       $('loginCard').style.display = 'none';
+      $('sectionTabs').style.display = '';
       $('addCard').style.display = '';
       $('listCard').style.display = '';
+      buildTypeOptions();
       renderList();
     }).catch(function(e){
       show('loginMsg','err','⚠️ ' + e.message);
@@ -255,7 +284,7 @@
 
   /* ---------- save content.json ---------- */
   function refreshSha(){
-    return gh('content.json?ref=main').then(function(r){
+    return gh(SECTIONS[section].file + '?ref=main').then(function(r){
       if(r.status === 404){ contentSha = null; return; }
       if(!r.ok) throw new Error('خطای اتصال (' + r.status + ')');
       return r.json();
@@ -270,7 +299,7 @@
       branch: 'main'
     };
     if(contentSha) body.sha = contentSha;
-    return gh('content.json', {method:'PUT', body: JSON.stringify(body)})
+    return gh(SECTIONS[section].file, {method:'PUT', body: JSON.stringify(body)})
       .then(function(r){
         if(r.status === 409 || r.status === 422){
           /* نسخه فایل تغییر کرده (مثلاً پنل در دو تب باز بوده) — یک‌بار خودکار به‌روزرسانی و تلاش مجدد */
@@ -392,7 +421,7 @@
     } else if(it.type === 'link'){
       $('fUrl').value = it.url || '';
     }
-    $('keepFileHint').style.display = (it.type === 'pdf' || it.type === 'video') ? '' : 'none';
+    $('keepFileHint').style.display = (it.type !== 'link') ? '' : 'none';
     $('addBtn').textContent = '💾 ذخیره تغییرات';
     hide('addMsg');
     $('addCard').scrollIntoView({behavior:'smooth'});
@@ -418,11 +447,60 @@
     $('vidBoxLabel').childNodes[0].textContent = '🎬 برای انتخاب فایل ویدیو کلیک کنید (حداکثر ۲۵ مگابایت) ';
   }
 
+  /* ---------- section tabs ---------- */
+  function buildTypeOptions(){
+    var sel = $('fType');
+    sel.innerHTML = SECTIONS[section].types.map(function(t){
+      return '<option value="' + t.v + '">' + t.t + '</option>';
+    }).join('');
+    applyTypeUI(sel.value);
+  }
+  function switchSection(s){
+    if(section === s) return;
+    section = s;
+    $('tabContent').classList.toggle('active', s === 'content');
+    $('tabActs').classList.toggle('active', s === 'acts');
+    cancelEditMode();
+    items = []; contentSha = null;
+    $('itemsList').innerHTML = '<p style="font-size:13.5px;color:#9aa0ad;text-align:center;padding:10px;">در حال بارگذاری…</p>';
+    hide('listMsg'); hide('addMsg');
+    gh(SECTIONS[s].file + '?ref=main').then(function(r){
+      if(r.status === 404) return null;
+      if(!r.ok) throw new Error('خطای اتصال (' + r.status + ')');
+      return r.json();
+    }).then(function(data){
+      if(data){
+        contentSha = data.sha;
+        try{
+          var parsed = JSON.parse(b64DecodeUnicode(data.content));
+          items = parsed.items || [];
+        }catch(e){ items = []; }
+      }
+      buildTypeOptions();
+      renderList();
+    }).catch(function(e){
+      show('listMsg','err','⚠️ ' + e.message);
+    });
+  }
   /* ---------- type & video-mode UI ---------- */
   function applyTypeUI(type){
-    $('pdfZone').style.display   = type === 'pdf'   ? '' : 'none';
+    var isFileType = (type === 'pdf' || type === 'image' || type === 'word');
+    $('pdfZone').style.display   = isFileType ? '' : 'none';
     $('videoZone').style.display = type === 'video' ? '' : 'none';
     $('urlZone').style.display   = type === 'link'  ? '' : 'none';
+    /* accept و متن کادر انتخاب فایل بر اساس نوع */
+    var f = $('fFile');
+    var lbl = $('pdfBoxLabel');
+    if(type === 'image'){
+      f.setAttribute('accept', 'image/*');
+      lbl.childNodes[0].textContent = '🖼 برای انتخاب عکس کلیک کنید (JPG/PNG — حداکثر ۲۵ مگابایت) ';
+    } else if(type === 'word'){
+      f.setAttribute('accept', '.doc,.docx');
+      lbl.childNodes[0].textContent = '📝 برای انتخاب فایل Word کلیک کنید (doc/docx — حداکثر ۲۵ مگابایت) ';
+    } else {
+      f.setAttribute('accept', '.pdf');
+      lbl.childNodes[0].textContent = '📎 برای انتخاب فایل PDF کلیک کنید (حداکثر ۲۵ مگابایت) ';
+    }
   }
   $('fType').addEventListener('change', function(){ applyTypeUI(this.value); });
 
@@ -454,16 +532,17 @@
     var btn = this; btn.disabled = true;
 
     var getUrl;
-    if(type === 'pdf'){
+    var FILE_TYPES = {pdf:'فایل PDF', image:'عکس', word:'فایل Word'};
+    if(FILE_TYPES[type]){
       var f = $('fFile').files[0];
       if(f){
-        show('addMsg','info','در حال آپلود فایل…');
+        show('addMsg','info','در حال آپلود ' + FILE_TYPES[type] + '…');
         getUrl = uploadFile(f);
-      } else if(isEdit && oldItem.type === 'pdf'){
+      } else if(isEdit && oldItem.type === type){
         getUrl = Promise.resolve(oldItem.url); /* keep old file */
       } else {
         btn.disabled = false;
-        return show('addMsg','err','⚠️ فایل PDF را انتخاب کنید.');
+        return show('addMsg','err','⚠️ ' + FILE_TYPES[type] + ' را انتخاب کنید.');
       }
     } else if(type === 'video'){
       if(videoMode === 'file'){
@@ -514,6 +593,9 @@
   });
 
   /* ---------- login ---------- */
+  $('tabContent').addEventListener('click', function(){ switchSection('content'); });
+  $('tabActs').addEventListener('click', function(){ switchSection('acts'); });
+
   $('loginBtn').addEventListener('click', function(){
     token = $('token').value.trim();
     if(!token) return show('loginMsg','err','⚠️ توکن را وارد کنید.');
@@ -525,6 +607,5 @@
   }
 })();
 </script>
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>

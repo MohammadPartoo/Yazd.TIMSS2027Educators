@@ -570,6 +570,70 @@
     max-width:640px;margin:0 auto;
   }
   .content-note{margin-top:22px;text-align:center;font-size:12.5px;color:#9aa0ad;}
+  /* ---------- Activities section ---------- */
+  .acts-sec{background:var(--cream);}
+  .ccard.image .cic{background:rgba(46,125,50,.1);border:1.5px solid #2e7d32;}
+  .ccard.word .cic{background:rgba(21,101,192,.1);border:1.5px solid #1565c0;}
+  .ccard .cthumb{
+    width:100%;height:150px;object-fit:cover;border-radius:10px;
+    border:1px solid #eadfc7;display:block;cursor:zoom-in;
+  }
+  /* ---------- Tech / EdTech section ---------- */
+  .tech-sec{background:linear-gradient(135deg,#0d1b33 0%,#122a52 55%,#0c1e3d 100%);position:relative;}
+  .tech-sec::before{
+    content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+    background-image:radial-gradient(rgba(201,162,75,.14) 1px,transparent 1.5px);
+    background-size:26px 26px;
+  }
+  .tech-sec > .container{position:relative;z-index:1;}
+  .tech-sec .sec-title h2{color:#fff;}
+  .tech-sec .sec-title p{color:#b9c6de;}
+  .tech-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:24px;}
+  .tcard2{
+    position:relative;border-radius:18px;overflow:hidden;text-decoration:none;
+    background:#0e2143;border:1px solid rgba(201,162,75,.35);
+    box-shadow:0 12px 32px rgba(0,0,0,.35);
+    transition:transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, border-color .35s;
+    display:flex;flex-direction:column;
+  }
+  .tcard2:hover{
+    transform:translateY(-8px) scale(1.015);
+    border-color:var(--gold);
+    box-shadow:0 22px 48px rgba(0,0,0,.5), 0 0 0 1px rgba(201,162,75,.35), 0 0 26px rgba(201,162,75,.18);
+  }
+  .tcard2 .shot{position:relative;overflow:hidden;height:185px;}
+  .tcard2 .shot img{
+    width:100%;height:100%;object-fit:cover;display:block;
+    transition:transform .6s cubic-bezier(.22,1,.36,1);
+  }
+  .tcard2:hover .shot img{transform:scale(1.08);}
+  .tcard2 .shot::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg,transparent 55%,rgba(14,33,67,.9) 100%);
+  }
+  .tcard2 .tbadge{
+    position:absolute;top:12px;right:12px;z-index:2;
+    background:rgba(12,30,61,.85);border:1px solid var(--gold);color:var(--gold-light);
+    font-size:11px;font-weight:700;border-radius:14px;padding:3px 12px;backdrop-filter:blur(4px);
+  }
+  .tcard2 .tbody{padding:18px 18px 20px;flex:1;display:flex;flex-direction:column;gap:8px;}
+  .tcard2 h3{
+    color:#fff;font-size:16.5px;display:flex;align-items:center;gap:8px;
+  }
+  .tcard2 h3 .tlogo{font-size:19px;}
+  .tcard2 p{font-size:13px;color:#c4d0e6;line-height:2;flex:1;text-align:justify;}
+  .tcard2 .tgo{
+    display:inline-flex;align-items:center;gap:6px;align-self:flex-start;
+    color:var(--gold-light);font-size:12.5px;font-weight:700;
+    border-bottom:1px dashed rgba(201,162,75,.5);padding-bottom:2px;
+    transition:.25s;
+  }
+  .tcard2:hover .tgo{color:#fff;border-color:var(--gold-light);}
+  .tech-note{
+    margin-top:28px;text-align:center;background:rgba(201,162,75,.1);
+    border:1px dashed var(--gold);border-radius:14px;padding:14px 20px;
+    font-size:13px;color:#e8dbb8;
+  }
   /* ---------- Video modal ---------- */
   .vmodal{
     position:fixed;inset:0;z-index:250;
@@ -795,6 +859,8 @@
       <a href="#event">دوره کشوری</a>
       <a href="#timss">تیمز ۲۰۲۷</a>
       <a href="#content">محتوای دوره</a>
+      <a href="#activities">فعالیت‌ها</a>
+      <a href="#edtech">فناوری و آموزش</a>
       <a href="#schedule">برنامه دوره</a>
       <a href="#attractions">جاذبه‌ها</a>
       <a href="#venue">محل برگزاری</a>
@@ -993,6 +1059,112 @@
       📚 هنوز محتوایی بارگذاری نشده است.<br>
       جزوه‌ها و ویدیوهای دوره پس از برگزاری جلسات، در همین بخش قرار می‌گیرد.
     </div>
+  </div>
+</section>
+
+<section class="acts-sec patterned" id="activities">
+  <div class="container">
+    <div class="sec-banner"><img src="img/img05.jpg" alt="دبیرخانه کشوری کیفیت‌بخشی به فرآیند آموزش درس علوم تجربی — استان فارس"></div>
+    <div class="sec-title">
+      <div class="orn"><svg class="orn-svg" viewBox="0 0 240 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#c9a24b" stroke-width="1.6" fill="none" stroke-linecap="round">
+          <path d="M14 14 H86"/><path d="M154 14 H226"/>
+          <path d="M86 14 q6 -7 12 0 q-6 7 -12 0"/>
+          <path d="M142 14 q6 -7 12 0 q-6 7 -12 0"/>
+        </g>
+        <g fill="#c9a24b">
+          <circle cx="14" cy="14" r="2.6"/><circle cx="226" cy="14" r="2.6"/>
+          <path d="M120 3 L123.2 10.8 L131 14 L123.2 17.2 L120 25 L116.8 17.2 L109 14 L116.8 10.8 Z"/>
+          <path d="M120 8.2 L121.7 12.3 L125.8 14 L121.7 15.7 L120 19.8 L118.3 15.7 L114.2 14 L118.3 12.3 Z" fill="#e8cf94"/>
+        </g>
+      </svg></div>
+      <h2>فعالیت‌ها</h2>
+      <p>گزارش‌ها، مستندات و تولیدات دوره — عکس، فایل PDF و Word</p>
+    </div>
+    <div class="cfilters" id="afilters" style="display:none;">
+      <button class="cfilter active" data-type="all">همه</button>
+      <button class="cfilter" data-type="image">🖼 عکس‌ها</button>
+      <button class="cfilter" data-type="pdf">📄 PDF</button>
+      <button class="cfilter" data-type="word">📝 Word</button>
+    </div>
+    <div class="content-grid" id="actsGrid"></div>
+    <div class="content-empty" id="actsEmpty">
+      🗂 هنوز فعالیتی بارگذاری نشده است.<br>
+      مستندات و تولیدات دوره به‌تدریج در همین بخش قرار می‌گیرد.
+    </div>
+  </div>
+</section>
+
+<section class="tech-sec" id="edtech">
+  <div class="container">
+    <div class="sec-banner"><img src="img/img05.jpg" alt="دبیرخانه کشوری کیفیت‌بخشی به فرآیند آموزش درس علوم تجربی — استان فارس"></div>
+    <div class="sec-title">
+      <div class="orn"><svg class="orn-svg" viewBox="0 0 240 28" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#c9a24b" stroke-width="1.6" fill="none" stroke-linecap="round">
+          <path d="M14 14 H86"/><path d="M154 14 H226"/>
+          <path d="M86 14 q6 -7 12 0 q-6 7 -12 0"/>
+          <path d="M142 14 q6 -7 12 0 q-6 7 -12 0"/>
+        </g>
+        <g fill="#c9a24b">
+          <circle cx="14" cy="14" r="2.6"/><circle cx="226" cy="14" r="2.6"/>
+          <path d="M120 3 L123.2 10.8 L131 14 L123.2 17.2 L120 25 L116.8 17.2 L109 14 L116.8 10.8 Z"/>
+          <path d="M120 8.2 L121.7 12.3 L125.8 14 L121.7 15.7 L120 19.8 L118.3 15.7 L114.2 14 L118.3 12.3 Z" fill="#e8cf94"/>
+        </g>
+      </svg></div>
+      <h2>💻 فناوری و آموزش علوم تجربی</h2>
+      <p>نرم‌افزارها و سایت‌های شبیه‌سازی برتر جهان برای کلاس علوم — روی هر کارت کلیک کنید</p>
+    </div>
+    <div class="tech-grid">
+      <a class="tcard2" href="https://phet.colorado.edu/" target="_blank" rel="noopener">
+        <div class="shot"><span class="tbadge">رایگان — آنلاین</span><img src="img/tech-phet.jpg" alt="PhET" loading="lazy"></div>
+        <div class="tbody">
+          <h3><span class="tlogo">⚛️</span> PhET — دانشگاه کلرادو</h3>
+          <p>مشهورترین مجموعه شبیه‌سازی‌های تعاملی علوم و ریاضی در جهان؛ بیش از ۱۶۰ آزمایش فیزیک، شیمی، زیست و زمین‌شناسی که مستقیم در مرورگر اجرا می‌شوند و بسیاری از آن‌ها فارسی هم دارند. مطابق سطوح شناختی تیمز، بهترین ابزار برای «به‌کاربستن» مفاهیم است.</p>
+          <span class="tgo">🌐 phet.colorado.edu ←</span>
+        </div>
+      </a>
+      <a class="tcard2" href="https://www.yenka.com/" target="_blank" rel="noopener">
+        <div class="shot"><span class="tbadge">نسخه خانگی رایگان</span><img src="img/tech-crocodile.jpg" alt="Crocodile / Yenka" loading="lazy"></div>
+        <div class="tbody">
+          <h3><span class="tlogo">🐊</span> کروکودیل (Yenka)</h3>
+          <p>نرم‌افزار محبوب معلمان ایرانی؛ آزمایشگاه مجازی کامل شیمی، فیزیک و الکترونیک با امکان ترکیب مواد، مدارسازی و مشاهده نتایج واقعی. نسخه‌های قدیمی «کروکودیل» اکنون با نام Yenka توسعه می‌یابد و برای استفاده خانگی رایگان است.</p>
+          <span class="tgo">🌐 yenka.com ←</span>
+        </div>
+      </a>
+      <a class="tcard2" href="https://www.design-simulation.com/ip/" target="_blank" rel="noopener">
+        <div class="shot"><span class="tbadge">شبیه‌ساز فیزیک</span><img src="img/tech-iphysics.jpg" alt="Interactive Physics" loading="lazy"></div>
+        <div class="tbody">
+          <h3><span class="tlogo">🎢</span> اینتراکتیو فیزیکس</h3>
+          <p>ابزار کلاسیک و قدرتمند شبیه‌سازی مکانیک؛ سطح شیبدار، قرقره، برخورد، نیرو و حرکت را بدون هیچ کدنویسی بسازید و نمودارهای زنده بگیرید. برای تدریس فصل‌های حرکت و نیروی علوم متوسطه اول فوق‌العاده است.</p>
+          <span class="tgo">🌐 design-simulation.com ←</span>
+        </div>
+      </a>
+      <a class="tcard2" href="https://javalab.org/en/" target="_blank" rel="noopener">
+        <div class="shot"><span class="tbadge">رایگان — بدون نصب</span><img src="img/tech-javalab.jpg" alt="JavaLab" loading="lazy"></div>
+        <div class="tbody">
+          <h3><span class="tlogo">🧪</span> جاوالب (JavaLab)</h3>
+          <p>صدها شبیه‌سازی سبک و زیبا از همه شاخه‌های علوم — از آتش‌بازی شیمیایی تا گردش خون و امواج صوتی؛ بدون نیاز به نصب، مناسب کلاس‌هایی با اینترنت ضعیف. رابط ساده‌اش برای دانش‌آموزان متوسطه اول بسیار جذاب است.</p>
+          <span class="tgo">🌐 javalab.org ←</span>
+        </div>
+      </a>
+      <a class="tcard2" href="https://stellarium-web.org/" target="_blank" rel="noopener">
+        <div class="shot"><span class="tbadge">نجوم — رایگان</span><img src="img/tech-stellarium.jpg" alt="Stellarium" loading="lazy"></div>
+        <div class="tbody">
+          <h3><span class="tlogo">🔭</span> استلاریوم (Stellarium)</h3>
+          <p>آسمان‌نمای مجازی شگفت‌انگیز؛ آسمان شب هر نقطه از زمین را در هر تاریخی نمایش می‌دهد — صورت‌های فلکی، سیارات و ماه‌گرفتگی‌ها. برای تدریس فصل زمین و آسمان، کلاس شما را به رصدخانه تبدیل می‌کند. نسخه وب بدون نصب اجرا می‌شود.</p>
+          <span class="tgo">🌐 stellarium-web.org ←</span>
+        </div>
+      </a>
+      <a class="tcard2" href="https://www.geogebra.org/" target="_blank" rel="noopener">
+        <div class="shot"><span class="tbadge">رایگان — چندزبانه</span><img src="img/tech-geogebra.jpg" alt="GeoGebra" loading="lazy"></div>
+        <div class="tbody">
+          <h3><span class="tlogo">📐</span> جئوجبرا (GeoGebra)</h3>
+          <p>ابزار جهانی ریاضی و علوم با میلیون‌ها فعالیت آماده؛ رسم نمودار زنده، هندسه پویا و شبیه‌سازی‌های فیزیک. برای نمایش رابطه‌های کمّی در علوم (سرعت، فشار، دما) و پیوند ریاضی با علوم تجربی — هم‌راستا با رویکرد تیمز — عالی است.</p>
+          <span class="tgo">🌐 geogebra.org ←</span>
+        </div>
+      </a>
+    </div>
+    <div class="tech-note">💡 پیشنهاد دبیرخانه: این ابزارها را یک‌بار پیش از کلاس امتحان کنید و شبیه‌سازی مرتبط با درس هفته را از قبل آماده داشته باشید — یک شبیه‌سازی خوب، جایگزین ده‌ها اسلاید است.</div>
   </div>
 </section>
 
@@ -1818,6 +1990,79 @@
       .catch(function(){ /* فایل هنوز ساخته نشده — پیام پیش‌فرض می‌ماند */ });
   })();
 
+  /* ---------- activities section (from activities.json) ---------- */
+  (function(){
+    var grid = document.getElementById('actsGrid');
+    var empty = document.getElementById('actsEmpty');
+    var filters = document.getElementById('afilters');
+    if(!grid) return;
+    var TYPE_META = {
+      image: {ic:'🖼', btn:'مشاهده عکس', cls:'image'},
+      pdf:   {ic:'📄', btn:'دانلود PDF', cls:'pdf'},
+      word:  {ic:'📝', btn:'دانلود Word', cls:'word'}
+    };
+    function esc(s){
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+    /* نمایش بزرگ عکس در همان لایت‌باکس تصاویر سایت */
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lbImg');
+    var lbCap = document.getElementById('lbCaption');
+    function openImage(url, title){
+      if(!lb){ window.open(url, '_blank'); return; }
+      lbImg.src = url;
+      lbImg.alt = title || '';
+      lbCap.textContent = title || '';
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function render(items){
+      if(!items || !items.length){ return; }
+      empty.style.display = 'none';
+      filters.style.display = 'flex';
+      grid.innerHTML = items.map(function(it, idx){
+        var t = TYPE_META[it.type] || TYPE_META.pdf;
+        var url = /^https?:\/\//.test(it.url || '') || /^[\w\-./]+$/.test(it.url || '') ? it.url : '#';
+        var inner =
+          '<div class="chead"><div class="cic">' + t.ic + '</div>' +
+          '<h3>' + esc(it.title) + '</h3></div>';
+        if(it.type === 'image'){
+          inner += '<img class="cthumb" src="' + esc(url) + '" alt="' + esc(it.title) + '" loading="lazy" data-img="' + idx + '">';
+        }
+        inner +=
+          (it.desc ? '<p>' + esc(it.desc) + '</p>' : '') +
+          (it.date ? '<div class="cmeta">🗓 ' + esc(it.date) + '</div>' : '');
+        if(it.type === 'image'){
+          inner += '<button class="cbtn" data-img="' + idx + '">' + t.ic + ' ' + t.btn + '</button>';
+        } else {
+          inner += '<a class="cbtn" href="' + esc(url) + '" target="_blank" rel="noopener">' + t.ic + ' ' + t.btn + '</a>';
+        }
+        return '<div class="ccard ' + t.cls + '" data-type="' + t.cls + '">' + inner + '</div>';
+      }).join('');
+      grid.querySelectorAll('[data-img]').forEach(function(el){
+        el.addEventListener('click', function(){
+          var it = items[parseInt(el.getAttribute('data-img'), 10)];
+          openImage(it.url, it.title);
+        });
+      });
+      filters.querySelectorAll('.cfilter').forEach(function(btn){
+        btn.addEventListener('click', function(){
+          filters.querySelectorAll('.cfilter').forEach(function(b){ b.classList.remove('active'); });
+          btn.classList.add('active');
+          var type = btn.getAttribute('data-type');
+          grid.querySelectorAll('.ccard').forEach(function(c){
+            c.style.display = (type === 'all' || c.getAttribute('data-type') === type) ? '' : 'none';
+          });
+        });
+      });
+    }
+    fetch('activities.json?v=' + Date.now())
+      .then(function(r){ if(!r.ok) throw 0; return r.json(); })
+      .then(function(data){ render(data.items || data); })
+      .catch(function(){ /* فایل هنوز ساخته نشده */ });
+  })();
+
   /* ---------- hamburger menu ---------- */
   var menuToggle = document.getElementById('menuToggle');
   var mainMenu = document.getElementById('mainMenu');
@@ -1878,6 +2123,5 @@
 })();
 </script>
 
-<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 </html>
