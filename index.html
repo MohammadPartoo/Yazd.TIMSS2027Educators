@@ -335,6 +335,11 @@
     background:repeating-linear-gradient(-45deg,#fbf8f1 0 10px,#f5efe0 10px 20px);
     color:#8a7a54;font-size:13px;
   }
+  .sch-table .loc td{
+    background:linear-gradient(135deg,var(--navy) 0%,#1d3f77 100%);
+    color:var(--gold-light);font-weight:800;font-size:13px;padding:10px 16px;
+    letter-spacing:.2px;
+  }
   .sch-note{margin-top:16px;text-align:center;font-size:13px;color:#8a8f9c;}
   /* ---------- Hotels ---------- */
   .hotels .cards{grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
@@ -725,6 +730,11 @@
   .tl-desc .tag{
     display:inline-block;background:linear-gradient(135deg,var(--gold),#b8903a);
     color:#fff;font-weight:700;font-size:11px;border-radius:12px;padding:2px 11px;
+  }
+  .tl-loc{
+    position:relative;margin:10px 0 14px;background:linear-gradient(135deg,var(--navy) 0%,#1d3f77 100%);
+    color:var(--gold-light);font-weight:800;font-size:13px;border-radius:10px;
+    padding:9px 16px;box-shadow:0 6px 16px rgba(18,42,82,.2);
   }
   @media(max-width:560px){
     .tl{padding-right:26px;}
@@ -1195,6 +1205,7 @@
       <p>برنامه پیشنهادی؛ جزئیات نهایی متعاقباً از سوی دبیرخانه دوره اعلام می‌شود</p>
     </div>
     <div class="day-tabs">
+      <button class="day-tab" data-day="d0">پذیرش — ۲۰ تیر</button>
       <button class="day-tab active" data-day="d1">روز اول — ۲۱ تیر</button>
       <button class="day-tab" data-day="d2">روز دوم — ۲۲ تیر</button>
       <button class="day-tab" data-day="d3">روز سوم — ۲۳ تیر</button>
@@ -1203,41 +1214,76 @@
       <button class="view-btn active" id="vbTimeline">⏳ خط زمانی</button>
       <button class="view-btn" id="vbTable">📋 جدول</button>
     </div>
+    <div class="day-panel" id="d0">
+      <table class="sch-table">
+        <tr><th style="width:130px;">⏱ ساعت</th><th>برنامه</th></tr>
+        <tr><td class="tm"><i>۱۶:۰۰</i></td><td><div class="evt"><span class="dot">📋</span> پذیرش، ثبت‌نام و تحویل بسته آموزشی</div></td></tr>
+      </table>
+    </div>
     <div class="day-panel active" id="d1">
       <table class="sch-table">
         <tr><th style="width:130px;">⏱ ساعت</th><th>برنامه</th></tr>
-        <tr><td class="tm"><i>۸:۰۰ – ۹:۰۰</i></td><td><div class="evt"><span class="dot">📋</span> پذیرش، ثبت‌نام و تحویل بسته آموزشی</div></td></tr>
-        <tr><td class="tm"><i>۹:۰۰ – ۱۰:۰۰</i></td><td><div class="evt"><span class="dot">🎙</span> افتتاحیه؛ تلاوت قرآن، سرود ملی و سخنرانی مسئولان <span class="tag">افتتاحیه</span></div></td></tr>
-        <tr class="brk"><td class="tm"><i>۱۰:۰۰ – ۱۰:۳۰</i></td><td>☕ پذیرایی و استراحت</td></tr>
-        <tr><td class="tm"><i>۱۰:۳۰ – ۱۲:۳۰</i></td><td><div class="evt"><span class="dot">📊</span> آشنایی با چارچوب سنجش تیمز ۲۰۲۷ در حوزه علوم تجربی <span class="tag">نشست علمی</span></div></td></tr>
-        <tr class="brk"><td class="tm"><i>۱۲:۳۰ – ۱۴:۰۰</i></td><td>🕌 نماز و ناهار</td></tr>
-        <tr><td class="tm"><i>۱۴:۰۰ – ۱۶:۰۰</i></td><td><div class="evt"><span class="dot">📈</span> تحلیل نتایج ایران در ادوار گذشته تیمز و درس‌آموخته‌ها <span class="tag">کارگاه</span></div></td></tr>
-        <tr><td class="tm"><i>۱۶:۰۰ – ۱۷:۳۰</i></td><td><div class="evt"><span class="dot">💬</span> پرسش و پاسخ و هم‌اندیشی استانی</div></td></tr>
+        <tr class="loc"><td colspan="2">📍 افتتاحیه — مرکز همایش‌های باقرالعلوم دانشگاه علوم پزشکی</td></tr>
+        <tr class="brk"><td class="tm"><i>۶:۰۰ – ۶:۴۵</i></td><td>🍳 صبحانه</td></tr>
+        <tr><td class="tm"><i>۷:۰۰</i></td><td><div class="evt"><span class="dot">🚌</span> حرکت از محل تالار فرهنگیان به مرکز همایش‌های باقرالعلوم دانشگاه علوم پزشکی <span class="tag">جابجایی</span></div></td></tr>
+        <tr><td class="tm"><i>۷:۱۵ – ۷:۲۰</i></td><td><div class="evt"><span class="dot">📖</span> تلاوت قرآن <span class="tag">افتتاحیه</span></div></td></tr>
+        <tr><td class="tm"><i>۷:۲۰ – ۷:۲۵</i></td><td><div class="evt"><span class="dot">🎬</span> پخش کلیپ سرود جمهوری اسلامی (اجرا شده توسط دانش‌آموزان استان یزد) <span class="tag">افتتاحیه</span></div></td></tr>
+        <tr><td class="tm"><i>۷:۲۵ – ۷:۳۰</i></td><td><div class="evt"><span class="dot">🎙</span> شروع رسمی مراسم توسط مجری محترم <span class="tag">افتتاحیه</span></div></td></tr>
+        <tr><td class="tm"><i>۷:۳۰ – ۷:۴۵</i></td><td><div class="evt"><span class="dot">🎙</span> سخنرانی مدیرکل محترم آموزش و پرورش استان یزد، جناب آقای علی دهقان بهاءآبادی <span class="tag">سخنرانی</span></div></td></tr>
+        <tr><td class="tm"><i>۷:۴۵ – ۷:۵۵</i></td><td><div class="evt"><span class="dot">🎬</span> پخش کلیپ به مناسبت شهادت رهبر انقلاب (اجرا شده توسط دانش‌آموزان استان یزد) <span class="tag">افتتاحیه</span></div></td></tr>
+        <tr><td class="tm"><i>۷:۵۵ – ۸:۱۰</i></td><td><div class="evt"><span class="dot">🎙</span> سخنرانی مدیرکل محترم دفتر آموزش دوره اول متوسطه وزارت متبوع، جناب آقای دکتر سیدعلی حسینی <span class="tag">سخنرانی</span></div></td></tr>
+        <tr><td class="tm"><i>۸:۱۰ – ۸:۱۵</i></td><td><div class="evt"><span class="dot">🎬</span> کلیپ معرفی شهر تاریخی و جهانی یزد <span class="tag">افتتاحیه</span></div></td></tr>
+        <tr><td class="tm"><i>۸:۱۵ – ۸:۳۰</i></td><td><div class="evt"><span class="dot">🎙</span> سخنرانی دبیرکل شورای عالی آموزش و پرورش، جناب آقای دکتر محمود امانی طهرانی <span class="tag">سخنرانی</span></div></td></tr>
+        <tr><td class="tm"><i>۸:۳۰ – ۸:۴۰</i></td><td><div class="evt"><span class="dot">🖼</span> رونمایی از پوستر تیمز <span class="tag">افتتاحیه</span></div></td></tr>
+        <tr><td class="tm"><i>۸:۴۰</i></td><td><div class="evt"><span class="dot">🚌</span> حرکت از محل مرکز همایش‌های باقرالعلوم دانشگاه علوم پزشکی به تالار فرهنگیان <span class="tag">جابجایی</span></div></td></tr>
+        <tr class="loc"><td colspan="2">📍 کارگاه‌های آموزشی — تالار فرهنگیان استان یزد</td></tr>
+        <tr><td class="tm"><i>۹:۰۰ – ۱۰:۱۵</i></td><td><div class="evt"><span class="dot">🧠</span> الگوی مثلث تحول برای تدریس پویا/ مثلث یادگیری رشد دهنده (بخش اول) <span class="tag">کارگاه</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۱۰:۱۵ – ۱۰:۳۰</i></td><td>☕ پذیرایی</td></tr>
+        <tr><td class="tm"><i>۱۰:۳۰ – ۱۲:۳۰</i></td><td><div class="evt"><span class="dot">🧠</span> الگوی مثلث تحول برای تدریس پویا/ مثلث یادگیری رشد دهنده (بخش دوم) <span class="tag">کارگاه</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۱۲:۳۰ – ۱۴:۳۰</i></td><td>🕌 نماز و ناهار</td></tr>
+        <tr><td class="tm"><i>۱۴:۳۰ – ۱۶:۰۰</i></td><td><div class="evt"><span class="dot">📊</span> مهندسی یادگیری اثربخش با راهبردهای سنجش کلاسی <span class="tag">کارگاه</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۱۶:۰۰ – ۱۶:۳۰</i></td><td>☕ پذیرایی/ بازی روان‌شناختی</td></tr>
+        <tr><td class="tm"><i>۱۶:۳۰ – ۱۸:۰۰</i></td><td><div class="evt"><span class="dot">🌍</span> علوم زمین در تیمز۲۰۲۷، زیرحوزه‌های موضوعی، تحلیل تطبیقی سرفصل‌ها و واکاوی سوالات چالشی تیمز <span class="tag">نشست علمی</span></div></td></tr>
+        <tr><td class="tm"><i>۱۸:۳۰ – ۲۱:۳۰</i></td><td><div class="evt"><span class="dot">🏛</span> برنامه بازدید علمی، فرهنگی یا تفریحی استان <span class="tag">برنامه جانبی</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۲۱:۳۰ – ۲۲:۳۰</i></td><td>🍽 شام</td></tr>
       </table>
     </div>
     <div class="day-panel" id="d2">
       <table class="sch-table">
         <tr><th style="width:130px;">⏱ ساعت</th><th>برنامه</th></tr>
-        <tr><td class="tm"><i>۸:۳۰ – ۱۰:۳۰</i></td><td><div class="evt"><span class="dot">🧠</span> طراحی آموزشی مبتنی بر سطوح شناختی دانستن، به‌کاربستن و استدلال <span class="tag">کارگاه</span></div></td></tr>
-        <tr class="brk"><td class="tm"><i>۱۰:۳۰ – ۱۱:۰۰</i></td><td>☕ پذیرایی و استراحت</td></tr>
-        <tr><td class="tm"><i>۱۱:۰۰ – ۱۲:۳۰</i></td><td><div class="evt"><span class="dot">✍️</span> طراحی سؤال استاندارد به سبک تیمز؛ کار گروهی <span class="tag">کارگاه</span></div></td></tr>
-        <tr class="brk"><td class="tm"><i>۱۲:۳۰ – ۱۴:۰۰</i></td><td>🕌 نماز و ناهار</td></tr>
-        <tr><td class="tm"><i>۱۴:۰۰ – ۱۶:۰۰</i></td><td><div class="evt"><span class="dot">🧪</span> آزمایش‌محوری و کاوشگری در آموزش علوم تجربی <span class="tag">کارگاه عملی</span></div></td></tr>
-        <tr><td class="tm"><i>۱۶:۰۰ – ۱۷:۳۰</i></td><td><div class="evt"><span class="dot">🤝</span> تبادل تجربه‌های موفق استان‌ها <span class="tag">هم‌اندیشی</span></div></td></tr>
-        <tr><td class="tm"><i>۱۸:۳۰</i></td><td><div class="evt"><span class="dot">🕌</span> بازدید فرهنگی از بافت تاریخی یزد و مجموعه امیرچخماق <span class="tag">برنامه جانبی</span></div></td></tr>
+        <tr class="loc"><td colspan="2">📍 کارگاه‌های آموزشی — تالار فرهنگیان استان یزد</td></tr>
+        <tr class="brk"><td class="tm"><i>۶:۳۰ – ۷:۱۵</i></td><td>🍳 صبحانه</td></tr>
+        <tr><td class="tm"><i>۷:۳۰ – ۹:۰۰</i></td><td><div class="evt"><span class="dot">🧪</span> شیمی در تیمز۲۰۲۷، زیرحوزه‌های موضوعی، تحلیل تطبیقی سرفصل‌ها و واکاوی سوالات چالشی تیمز <span class="tag">نشست علمی</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۹:۰۰ – ۹:۱۵</i></td><td>☕ پذیرایی</td></tr>
+        <tr><td class="tm"><i>۹:۱۵ – ۱۰:۴۵</i></td><td><div class="evt"><span class="dot">💻</span> کارگاه آزمایشگاه مجازی PHET، Crocodile، interactive physics <span class="tag">کارگاه عملی</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۱۰:۴۵ – ۱۱</i></td><td>☕ پذیرایی</td></tr>
+        <tr><td class="tm"><i>۱۱ – ۱۲:۳۰</i></td><td><div class="evt"><span class="dot">⚛️</span> فیزیک در تیمز۲۰۲۷، زیرحوزه‌های موضوعی، تحلیل تطبیقی سرفصل‌ها و واکاوی سوالات چالشی تیمز <span class="tag">نشست علمی</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۱۲:۳۰ – ۱۴:۳۰</i></td><td>🕌 نماز و ناهار</td></tr>
+        <tr><td class="tm"><i>۱۴:۳۰ – ۱۶:۰۰</i></td><td><div class="evt"><span class="dot">🔬</span> کاوش علمی، آزمایش‌های جذاب علوم تجربی، مطابق با سرفصل‌های کتاب درسی پایه (تبادل تجارب زیسته همکاران) <span class="tag">کارگاه عملی</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۱۶:۰۰ – ۱۶:۱۵</i></td><td>☕ پذیرایی</td></tr>
+        <tr><td class="tm"><i>۱۶:۱۵ – ۱۸:۰۰</i></td><td><div class="evt"><span class="dot">🔬</span> کاوش علمی، آزمایش‌های جذاب علوم تجربی، مطابق با سرفصل‌های کتاب درسی پایه (تبادل تجارب زیسته همکاران) <span class="tag">کارگاه عملی</span></div></td></tr>
+        <tr><td class="tm"><i>۱۸:۳۰ – ۲۱:۳۰</i></td><td><div class="evt"><span class="dot">🏛</span> برنامه بازدید علمی، فرهنگی یا تفریحی استان <span class="tag">برنامه جانبی</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۲۱:۳۰ – ۲۲:۳۰</i></td><td>🍽 شام</td></tr>
       </table>
     </div>
     <div class="day-panel" id="d3">
       <table class="sch-table">
         <tr><th style="width:130px;">⏱ ساعت</th><th>برنامه</th></tr>
-        <tr><td class="tm"><i>۸:۳۰ – ۱۰:۳۰</i></td><td><div class="evt"><span class="dot">🎤</span> ارائه گروه‌ها؛ نقد و بررسی طرح‌های آموزشی تدوین‌شده <span class="tag">ارائه</span></div></td></tr>
-        <tr class="brk"><td class="tm"><i>۱۰:۳۰ – ۱۱:۰۰</i></td><td>☕ پذیرایی و استراحت</td></tr>
-        <tr><td class="tm"><i>۱۱:۰۰ – ۱۲:۳۰</i></td><td><div class="evt"><span class="dot">🗺</span> تدوین برنامه اقدام استانی برای انتقال آموخته‌ها به دبیران <span class="tag">کارگاه</span></div></td></tr>
-        <tr class="brk"><td class="tm"><i>۱۲:۳۰ – ۱۴:۰۰</i></td><td>🕌 نماز و ناهار</td></tr>
-        <tr><td class="tm"><i>۱۴:۰۰ – ۱۵:۳۰</i></td><td><div class="evt"><span class="dot">🏅</span> جمع‌بندی، ارزشیابی دوره و اختتامیه؛ اهدای گواهی <span class="tag">اختتامیه</span></div></td></tr>
+        <tr class="loc"><td colspan="2">📍 کارگاه‌های آموزشی — تالار فرهنگیان استان یزد</td></tr>
+        <tr class="brk"><td class="tm"><i>۶:۳۰ – ۷:۳۰</i></td><td>🍳 صبحانه</td></tr>
+        <tr><td class="tm"><i>۷:۴۵ – ۹:۴۵</i></td><td><div class="evt"><span class="dot">🧬</span> زیست‌شناسی در تیمز۲۰۲۷، زیرحوزه‌های موضوعی، تحلیل تطبیقی سرفصل‌ها و واکاوی سوالات چالشی تیمز <span class="tag">نشست علمی</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۰۹:۴۵ – ۱۰</i></td><td>☕ پذیرایی</td></tr>
+        <tr><td class="tm"><i>۱۰ – ۱۲:۰۰</i></td><td><div class="evt"><span class="dot">🧩</span> آموزش ترکیبی در آموزش علوم تجربی/ خطاهای یادگیری و بازخورد موثر به آن‌ها <span class="tag">کارگاه</span></div></td></tr>
+        <tr class="brk"><td class="tm"><i>۱۲:۰۰ – ۱۴:۰۰</i></td><td>🕌 نماز و ناهار</td></tr>
+        <tr class="loc"><td colspan="2">📍 اختتامیه — تالار فرهنگیان استان یزد</td></tr>
+        <tr><td class="tm"><i>۱۴:۰۰ – ۱۴:۱۰</i></td><td><div class="evt"><span class="dot">📖</span> شروع اختتامیه با تلاوت قرآن <span class="tag">اختتامیه</span></div></td></tr>
+        <tr><td class="tm"><i>۱۴:۱۰ – ۱۴:۲۰</i></td><td><div class="evt"><span class="dot">🎬</span> پخش کلیپ اجرای دوره <span class="tag">اختتامیه</span></div></td></tr>
+        <tr><td class="tm"><i>۱۴:۲۰ – ۱۴:۳۵</i></td><td><div class="evt"><span class="dot">🎙</span> سخنرانی معاون محترم آموزش متوسطه آموزش و پرورش استان یزد، جناب آقای مهندس مطهریان <span class="tag">سخنرانی</span></div></td></tr>
+        <tr><td class="tm"><i>۱۴:۳۵ – ۱۴:۵۰</i></td><td><div class="evt"><span class="dot">🎙</span> سخنرانی مدیرکل محترم آموزش و پرورش استان یزد، جناب آقای علی دهقان بهاءآبادی <span class="tag">سخنرانی</span></div></td></tr>
+        <tr><td class="tm"><i>۱۴:۵۰ – ۱۵:۰۵</i></td><td><div class="evt"><span class="dot">🎙</span> سخنرانی مدیرکل محترم دفتر آموزش دوره اول متوسطه، جناب آقای دکتر سیدعلی حسینی <span class="tag">سخنرانی</span></div></td></tr>
       </table>
     </div>
-    <div class="sch-note">⚠️ این جدول نمونه و پیشنهادی است؛ برنامه قطعی از سوی دبیرخانه دوره ابلاغ خواهد شد.</div>
+    <div class="sch-note">⚠️ ساعات و ترتیب برنامه ممکن است با تصمیم دبیرخانه دوره اندکی تغییر کند.</div>
   </div>
 </section>
 
@@ -1853,6 +1899,13 @@
     tl.className = 'tl';
     var rows = table.querySelectorAll('tr');
     for(var i = 1; i < rows.length; i++){ /* skip header */
+      if(rows[i].classList.contains('loc')){
+        var locDiv = document.createElement('div');
+        locDiv.className = 'tl-loc';
+        locDiv.textContent = rows[i].querySelector('td').textContent.trim();
+        tl.appendChild(locDiv);
+        continue;
+      }
       var tds = rows[i].querySelectorAll('td');
       if(tds.length < 2) continue;
       var isBreak = rows[i].classList.contains('brk');
