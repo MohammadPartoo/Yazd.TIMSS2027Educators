@@ -410,6 +410,18 @@
     display:none;background:var(--gold);color:var(--navy-dark);font-weight:900;
     border-radius:30px;padding:10px 30px;font-size:17px;margin:26px auto 6px;
   }
+  .live-status{
+    display:none;color:var(--gold-light);font-weight:800;font-size:14px;
+    letter-spacing:.3px;margin-top:20px;
+  }
+  .live-title{
+    display:none;color:#fff;font-weight:800;font-size:clamp(16px,3vw,21px);
+    max-width:680px;margin:6px auto 0;line-height:1.6;
+  }
+  .cd-next{
+    display:none;color:#c9d4ea;font-size:13.5px;margin-top:12px;
+  }
+  .cd-next b{color:var(--gold-light);}
   @media(max-width:560px){
     .countdown{gap:8px;}
     .cd-box{min-width:70px;padding:9px 6px 7px;}
@@ -902,14 +914,17 @@
     <p class="sub">نخستین شهر خشتی جهان و میزبان مدرسان علوم تجربی سراسر کشور در راستای مطالعات تیمز ۲۰۲۷<br>۲۱ تا ۲۳ تیرماه ۱۴۰۵</p>
     <a class="cta fill" href="#event">اطلاعات دوره</a>
     <a class="cta" href="#attractions">آشنایی با یزد</a>
-    <div class="countdown" id="countdown" aria-label="شمارش معکوس تا آغاز دوره">
+    <div class="live-status" id="liveStatus"></div>
+    <div class="live-title" id="liveTitle"></div>
+    <div class="countdown" id="countdown" aria-label="شمارش معکوس">
       <div class="cd-box"><b id="cdDays">--</b><span>روز</span></div>
       <div class="cd-box"><b id="cdHours">--</b><span>ساعت</span></div>
       <div class="cd-box"><b id="cdMins">--</b><span>دقیقه</span></div>
       <div class="cd-box"><b id="cdSecs">--</b><span>ثانیه</span></div>
     </div>
-    <div class="cd-done" id="cdDone">🌿 دوره در حال برگزاری است</div>
-    <div style="color:#c9d4ea;font-size:13px;margin-top:10px;">تا آغاز دوره — ۲۱ تیر ۱۴۰۵</div>
+    <div class="cd-done" id="cdDone">✅ دوره برگزار شد — با سپاس از حضور شما</div>
+    <div style="color:#c9d4ea;font-size:13px;margin-top:10px;" id="cdCaption">تا آغاز دوره — ۲۱ تیر ۱۴۰۵</div>
+    <div class="cd-next" id="cdNext">برنامه بعدی: <b id="cdNextTitle"></b></div>
   </div>
 </div>
 
@@ -1202,6 +1217,7 @@
   </g>
 </svg></div>
       <h2>برنامه سه‌روزه دوره</h2>
+      <p>برنامه پیشنهادی؛ جزئیات نهایی متعاقباً از سوی دبیرخانه دوره اعلام می‌شود</p>
     </div>
     <div class="day-tabs">
       <button class="day-tab" data-day="d0">پذیرش — ۲۰ تیر</button>
@@ -1660,22 +1676,120 @@
     else if(e.key === 'ArrowRight') prev();
   });
 
-  /* ---------- countdown to 21 Tir 1405 (12 July 2026, 08:00 Iran time) ---------- */
+  /* ---------- live program status (based on real schedule, 21-23 Tir 1405 / 12-14 July 2026) ---------- */
   var fa = function(n){ return String(n).replace(/\d/g, function(d){ return '۰۱۲۳۴۵۶۷۸۹'[d]; }); };
   var pad2 = function(n){ return n < 10 ? '0' + n : '' + n; };
-  var startAt = new Date('2026-07-12T08:00:00+03:30').getTime();
-  var endAt   = new Date('2026-07-14T18:00:00+03:30').getTime();
-  var cdWrap = document.getElementById('countdown');
-  var cdDone = document.getElementById('cdDone');
+  var timeOf = function(iso){ return fa(iso.substr(11, 5)); };
+
+  var PROGRAM = [
+    {s:'2026-07-11T16:00:00+03:30', e:'2026-07-12T07:00:00+03:30', t:'پذیرش، ثبت‌نام و تحویل بسته آموزشی'},
+    {s:'2026-07-12T07:00:00+03:30', e:'2026-07-12T07:15:00+03:30', t:'حرکت از تالار فرهنگیان به مرکز همایش‌های باقرالعلوم دانشگاه علوم پزشکی'},
+    {s:'2026-07-12T07:15:00+03:30', e:'2026-07-12T07:20:00+03:30', t:'تلاوت قرآن'},
+    {s:'2026-07-12T07:20:00+03:30', e:'2026-07-12T07:25:00+03:30', t:'پخش کلیپ سرود جمهوری اسلامی'},
+    {s:'2026-07-12T07:25:00+03:30', e:'2026-07-12T07:30:00+03:30', t:'شروع رسمی مراسم توسط مجری محترم'},
+    {s:'2026-07-12T07:30:00+03:30', e:'2026-07-12T07:45:00+03:30', t:'سخنرانی مدیرکل محترم آموزش و پرورش استان یزد، جناب آقای علی دهقان بهاءآبادی'},
+    {s:'2026-07-12T07:45:00+03:30', e:'2026-07-12T07:55:00+03:30', t:'پخش کلیپ به مناسبت شهادت رهبر انقلاب'},
+    {s:'2026-07-12T07:55:00+03:30', e:'2026-07-12T08:10:00+03:30', t:'سخنرانی مدیرکل محترم دفتر آموزش دوره اول متوسطه وزارت متبوع، جناب آقای دکتر سیدعلی حسینی'},
+    {s:'2026-07-12T08:10:00+03:30', e:'2026-07-12T08:15:00+03:30', t:'کلیپ معرفی شهر تاریخی و جهانی یزد'},
+    {s:'2026-07-12T08:15:00+03:30', e:'2026-07-12T08:30:00+03:30', t:'سخنرانی دبیرکل شورای عالی آموزش و پرورش، جناب آقای دکتر محمود امانی طهرانی'},
+    {s:'2026-07-12T08:30:00+03:30', e:'2026-07-12T08:40:00+03:30', t:'رونمایی از پوستر تیمز'},
+    {s:'2026-07-12T08:40:00+03:30', e:'2026-07-12T09:00:00+03:30', t:'حرکت از مرکز همایش‌های باقرالعلوم دانشگاه علوم پزشکی به تالار فرهنگیان'},
+    {s:'2026-07-12T09:00:00+03:30', e:'2026-07-12T10:15:00+03:30', t:'الگوی مثلث تحول برای تدریس پویا/ مثلث یادگیری رشد دهنده (بخش اول)'},
+    {s:'2026-07-12T10:30:00+03:30', e:'2026-07-12T12:30:00+03:30', t:'الگوی مثلث تحول برای تدریس پویا/ مثلث یادگیری رشد دهنده (بخش دوم)'},
+    {s:'2026-07-12T14:30:00+03:30', e:'2026-07-12T16:00:00+03:30', t:'مهندسی یادگیری اثربخش با راهبردهای سنجش کلاسی'},
+    {s:'2026-07-12T16:30:00+03:30', e:'2026-07-12T18:00:00+03:30', t:'علوم زمین در تیمز۲۰۲۷ — نشست علمی'},
+    {s:'2026-07-12T18:30:00+03:30', e:'2026-07-12T21:30:00+03:30', t:'برنامه بازدید علمی، فرهنگی یا تفریحی استان'},
+
+    {s:'2026-07-13T07:30:00+03:30', e:'2026-07-13T09:00:00+03:30', t:'شیمی در تیمز۲۰۲۷ — نشست علمی'},
+    {s:'2026-07-13T09:15:00+03:30', e:'2026-07-13T10:45:00+03:30', t:'کارگاه آزمایشگاه مجازی PHET، Crocodile، interactive physics'},
+    {s:'2026-07-13T11:00:00+03:30', e:'2026-07-13T12:30:00+03:30', t:'فیزیک در تیمز۲۰۲۷ — نشست علمی'},
+    {s:'2026-07-13T14:30:00+03:30', e:'2026-07-13T16:00:00+03:30', t:'کاوش علمی، آزمایش‌های جذاب علوم تجربی (بخش اول)'},
+    {s:'2026-07-13T16:15:00+03:30', e:'2026-07-13T18:00:00+03:30', t:'کاوش علمی، آزمایش‌های جذاب علوم تجربی (بخش دوم)'},
+    {s:'2026-07-13T18:30:00+03:30', e:'2026-07-13T21:30:00+03:30', t:'برنامه بازدید علمی، فرهنگی یا تفریحی استان'},
+
+    {s:'2026-07-14T07:45:00+03:30', e:'2026-07-14T09:45:00+03:30', t:'زیست‌شناسی در تیمز۲۰۲۷ — نشست علمی'},
+    {s:'2026-07-14T10:00:00+03:30', e:'2026-07-14T12:00:00+03:30', t:'آموزش ترکیبی در آموزش علوم تجربی/ خطاهای یادگیری و بازخورد موثر به آن‌ها'},
+    {s:'2026-07-14T14:00:00+03:30', e:'2026-07-14T14:10:00+03:30', t:'شروع اختتامیه با تلاوت قرآن'},
+    {s:'2026-07-14T14:10:00+03:30', e:'2026-07-14T14:20:00+03:30', t:'پخش کلیپ اجرای دوره'},
+    {s:'2026-07-14T14:20:00+03:30', e:'2026-07-14T14:35:00+03:30', t:'سخنرانی معاون محترم آموزش متوسطه استان یزد، جناب آقای مهندس مطهریان'},
+    {s:'2026-07-14T14:35:00+03:30', e:'2026-07-14T14:50:00+03:30', t:'سخنرانی مدیرکل محترم آموزش و پرورش استان یزد، جناب آقای علی دهقان بهاءآبادی'},
+    {s:'2026-07-14T14:50:00+03:30', e:'2026-07-14T15:05:00+03:30', t:'سخنرانی مدیرکل محترم دفتر آموزش دوره اول متوسطه، جناب آقای دکتر سیدعلی حسینی'}
+  ];
+
+  var firstStart = Date.parse(PROGRAM[0].s);
+  var lastEnd = Date.parse(PROGRAM[PROGRAM.length - 1].e);
+
+  var elCountdown = document.getElementById('countdown');
+  var elDone = document.getElementById('cdDone');
+  var elCaption = document.getElementById('cdCaption');
+  var elLiveStatus = document.getElementById('liveStatus');
+  var elLiveTitle = document.getElementById('liveTitle');
+  var elNext = document.getElementById('cdNext');
+  var elNextTitle = document.getElementById('cdNextTitle');
+
+  function findState(now){
+    for(var i = 0; i < PROGRAM.length; i++){
+      var s = Date.parse(PROGRAM[i].s), e = Date.parse(PROGRAM[i].e);
+      if(now >= s && now < e){
+        return {mode:'running', cur:PROGRAM[i], next:PROGRAM[i+1] || null, target:e};
+      }
+      if(now < s){
+        return {mode:'waiting', next:PROGRAM[i], target:s};
+      }
+    }
+    return {mode:'done'};
+  }
+
   function tick(){
     var now = Date.now();
-    if(now >= startAt){
-      cdWrap.style.display = 'none';
-      if(now <= endAt){ cdDone.style.display = 'inline-block'; }
-      else { cdDone.style.display = 'inline-block'; cdDone.textContent = '✅ دوره برگزار شد — با سپاس از حضور شما'; }
+
+    if(now >= lastEnd){
+      elCountdown.style.display = 'none';
+      elLiveStatus.style.display = 'none';
+      elLiveTitle.style.display = 'none';
+      elCaption.style.display = 'none';
+      elNext.style.display = 'none';
+      elDone.style.display = 'inline-block';
       return;
     }
-    var diff = Math.floor((startAt - now) / 1000);
+
+    var st = findState(now);
+    elDone.style.display = 'none';
+    elCountdown.style.display = 'flex';
+    var target;
+
+    if(st.mode === 'running'){
+      elLiveStatus.style.display = 'block';
+      elLiveTitle.style.display = 'block';
+      elLiveStatus.textContent = '🔴 هم‌اکنون در حال برگزاری';
+      elLiveTitle.textContent = st.cur.t;
+      elCaption.style.display = 'none';
+      target = st.target;
+      if(st.next){
+        elNext.style.display = 'block';
+        elNextTitle.textContent = st.next.t + ' — ساعت ' + timeOf(st.next.s);
+      } else {
+        elNext.style.display = 'none';
+      }
+    } else { /* waiting */
+      elNext.style.display = 'none';
+      if(now < firstStart){
+        elLiveStatus.style.display = 'none';
+        elLiveTitle.style.display = 'none';
+        elCaption.style.display = 'block';
+        elCaption.textContent = 'تا آغاز دوره — ۲۱ تیر ۱۴۰۵';
+      } else {
+        elLiveStatus.style.display = 'block';
+        elLiveTitle.style.display = 'block';
+        elCaption.style.display = 'none';
+        elLiveStatus.textContent = '⏳ برنامه بعدی';
+        elLiveTitle.textContent = st.next.t + ' — ساعت ' + timeOf(st.next.s);
+      }
+      target = st.target;
+    }
+
+    var diff = Math.floor((target - now) / 1000);
+    if(diff < 0) diff = 0;
     var d = Math.floor(diff / 86400);
     var h = Math.floor((diff % 86400) / 3600);
     var m = Math.floor((diff % 3600) / 60);
